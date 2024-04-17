@@ -9,6 +9,15 @@ namespace User_login
 {
     class ConnectToDatabase
     {
+        string sqlStatement, connstring;
+        public ConnectToDatabase()
+        {
+            Initialize();
+        }
 
+        private void Initialize()
+        {
+
+        }
     }
 }
