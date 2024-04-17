@@ -17,6 +17,9 @@ namespace User_login
 
         private void Initialize()
         {
+            MySqlConnectionStringBuilder strBuild = new MySqlConnectionStringBuilder();
+            strBuild.Server = "localhost";
+            strBuild.UserID = 
 
         }
     }
