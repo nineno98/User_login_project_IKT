@@ -5,4 +5,4 @@ create table userdata(\
     passwd varchar(255) not null,\
     PRIMARY KEY(userid)\
 \
-)CHARACTER SET utf8 COLLATE utf8_hungarian_ci;\
+)CHARACTER SET utf8 COLLATE utf8_hungarian_ci;
