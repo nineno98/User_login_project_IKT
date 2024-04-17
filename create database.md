@@ -6,3 +6,8 @@ create table userdata(\
     PRIMARY KEY(userid)\
 \
 )CHARACTER SET utf8 COLLATE utf8_hungarian_ci;
+
+
+CREATE USER 'userloginclient'@'localhost' IDENTIFIED BY 'almaeper';
+
+grant select on userloginapp.userdata to 'userloginclient'@'localhost';
