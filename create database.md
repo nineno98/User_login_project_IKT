@@ -8,5 +8,5 @@ create table userdata(\
 )CHARACTER SET utf8 COLLATE utf8_hungarian_ci;
 
 
-CREATE USER 'userloginclient'@'localhost' IDENTIFIED BY 'almaeper';
+CREATE USER 'userloginclient'@'localhost' IDENTIFIED BY 'almaeper';\
 grant select on userloginapp.* to 'userloginclient'@'localhost'; 
