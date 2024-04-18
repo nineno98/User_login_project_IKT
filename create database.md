@@ -9,5 +9,4 @@ create table userdata(\
 
 
 CREATE USER 'userloginclient'@'localhost' IDENTIFIED BY 'almaeper';
-
-grant select on userloginapp.userdata to 'userloginclient'@'localhost';
+grant select on userloginapp.* to 'userloginclient'@'localhost'; 
