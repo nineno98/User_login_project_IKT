@@ -57,6 +57,20 @@ namespace User_login
             return response;
         }
 
+        public bool ConnectionTest()
+        {
+            try
+            {
+                dbconn.Open();
+                dbconn.Close();
+                return true;
+            }
+            catch (Exception)
+            {
+
+                return false;
+            }
+        }
 
 
 
