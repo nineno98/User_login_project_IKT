@@ -72,6 +72,32 @@ namespace User_login
             }
         }
 
+        public (int, int) Login(string username, string password)
+        {
+            sqlStatement = $"SELECT userid, username, email, passwd FROM `userdata` " +
+                    $"WHERE username = '{username}' and passwd = '{password}';";
+            try
+            {
+                dbconn.Open();
+                MySqlCommand command = new MySqlCommand();
+                command.Connection = dbconn;
+                command.CommandText = sqlStatement;
+
+
+
+                
+
+
+
+                dbconn.Close();
+            }
+            catch (Exception)
+            {
+
+                return (0,0);
+            }
+        }
+
 
 
     }
