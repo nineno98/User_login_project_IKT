@@ -144,6 +144,35 @@ namespace User_login
             }
         }
 
+        public List<User> SelectUsers()
+        {
+            sqlStatement = "SELECT userid, username, email FROM `userdata`;";
+
+            try
+            {
+                dbconn.Open();
+                MySqlCommand command = new MySqlCommand();
+                command.Connection = dbconn;
+                command.CommandText = sqlStatement;
+
+                reader = command.ExecuteReader();
+
+                while (reader.Read())
+                {
+                    user = new User(reader.GetInt32(0), reader.GetString(1), reader.GetString(2));
+                    userList.Add(user);
+                }
+
+                dbconn.Close();
+                return userList;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                return userList;
+            }
+        }
+
 
 
     }
