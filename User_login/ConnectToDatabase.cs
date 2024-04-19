@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.Metrics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -72,29 +73,74 @@ namespace User_login
             }
         }
 
-        public (int, int) Login(string username, string password)
+        public bool FindUsername(string username)
         {
-            sqlStatement = $"SELECT userid, username, email, passwd FROM `userdata` " +
-                    $"WHERE username = '{username}' and passwd = '{password}';";
+            sqlStatement = $"SELECT passwd FROM `userdata` " +
+                    $"WHERE username = '{username}';";
             try
             {
                 dbconn.Open();
                 MySqlCommand command = new MySqlCommand();
                 command.Connection = dbconn;
                 command.CommandText = sqlStatement;
-
-
-
+                int counter = 0;
                 
-
-
-
+                reader = command.ExecuteReader();
+                while (reader.Read())
+                {
+                    counter++;
+                }
+                
                 dbconn.Close();
+                if (counter != 0)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
             }
-            catch (Exception)
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                return false;
+            }
+        }
+
+        public bool CheckPasswdForUser(string user, string password)
+        {
+            sqlStatement = $"SELECT userid, username, email, passwd FROM `userdata` " +
+                $"WHERE username = '{user}' and passwd = '{password}';";
+            try
+            {
+                dbconn.Open();
+                MySqlCommand command = new MySqlCommand();
+                command.Connection = dbconn;
+                command.CommandText = sqlStatement;
+                int counter = 0;
+                reader = command.ExecuteReader();
+                while (reader.Read())
+                {
+                    counter++;
+                }
+                dbconn.Close();
+                if (counter == 1)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+
+               
+            }
+            catch (Exception e)
             {
 
-                return (0,0);
+                Console.WriteLine(e);
+                return false;
             }
         }
 

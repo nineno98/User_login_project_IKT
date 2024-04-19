@@ -12,7 +12,7 @@ namespace User_login
         static void Main(string[] args)
         {
             ConnectToDatabase connectToDatabase = new ConnectToDatabase();
-            Console.WriteLine(connectToDatabase.GetVerison());
+            bool isUserValid = connectToDatabase.FindUsername("tester");
             Console.ReadKey();
         }
     }
