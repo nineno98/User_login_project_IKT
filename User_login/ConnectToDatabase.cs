@@ -35,7 +35,7 @@ namespace User_login
             
         }
 
-        public string TestConnection()
+        public string GetVerison()
         {
             string response;
             sqlStatement = "SELECT version();";
@@ -56,6 +56,8 @@ namespace User_login
             }
             return response;
         }
+
+
 
 
     }
