@@ -9,35 +9,50 @@ namespace User_login
     internal class LoginProgram
     {
         private bool is_authenticated;
-        ConnectToDatabase connect;
+        public ConnectToDatabase ConnectToDatabase { get; private set; }
+
         public LoginProgram()
         {
-            
             is_authenticated = false;
-            // ez a változó tárolja a bejelentkezést
-            connect = new ConnectToDatabase();
+            ConnectToDatabase = new ConnectToDatabase();
+        }
+
+        public bool Login()
+        {
+            Console.WriteLine("***Sziper-szuper bejelentkező program 4000***");
+
+            Console.Write("Felhasználónév: ");
+            string username = GetInput();
+
+            Console.Write("Jelszó: ");
+            string password = GetInput();
+
+            if (!ConnectToDatabase.FindUsername(username))
+            {
+                Console.WriteLine("Hibás felhasználónév.");
+                return false;
+            }
+
+            if (!ConnectToDatabase.CheckPasswdForUser(username, password))
+            {
+                Console.WriteLine("Hibás jelszó.");
+                return false;
+            }
+
+            is_authenticated = true;
+            Console.WriteLine("Sikeres bejelentkezés.");
+            return true;
         }
 
         private string GetInput()
         {
-            throw new NotImplementedException();
-            /* 
-             ide jön a input bekérése. célszerű egy ciklust létrehozni,
-            amiből csak úgy van szökés ha a bevitt input nem egyenő ""-vel (üres string)
-             */
+            string input;
+            do
+            {
+                input = Console.ReadLine();
+            } while (input == "");
+
+            return input;
         }
-        public void Login()
-        {
-            throw new NotImplementedException();
-            /* 
-             itt kérjük be a felhasznlónevet és a jelszót.
-            felhasznév = getinpu()
-
-              ha connect.finduser()
-             
-             */
-        }
-
-
     }
 }

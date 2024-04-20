@@ -11,39 +11,16 @@ namespace User_login
     {
         static void Main(string[] args)
         {
-            ConnectToDatabase connectToDatabase = new ConnectToDatabase();/*
-            bool isUserValid = connectToDatabase.FindUsername("tester");
-            Console.ReadKey();*/
+            LoginProgram loginProgram = new LoginProgram();
 
-            bool loggedIn = false;
-            while (!loggedIn)
+            if (!loginProgram.Login())
             {
-                Console.WriteLine("***Sziper-szuper bejelentkező program 4000***");
-
-                Console.Write("Felhasználónév: ");
-                string username = Console.ReadLine();
-
-                Console.Write("Jelszó: ");
-                string password = Console.ReadLine();
-
-                if (!connectToDatabase.FindUsername(username))
-                {
-                    Console.WriteLine("Hibás felhasználónév.");
-                    continue;
-                }
-
-                if (!connectToDatabase.CheckPasswdForUser(username, password))
-                {
-                    Console.WriteLine("Hibás jelszó.");
-                    continue;
-                }
-
-                loggedIn = true;
-                Console.WriteLine("Sikeres bejelentkezés.");
+                Console.WriteLine("Sikertelen bejelentkezés.");
+                return;
             }
 
             // Bejelentkezés utáni menü
-            while (loggedIn)
+            while (true)
             {
                 Console.WriteLine("\nVálassz a menüből: lista | kilepes");
 
@@ -52,17 +29,17 @@ namespace User_login
                 switch (command)
                 {
                     case "lista":
-                        ListAllUsers(connectToDatabase);
+                        ListAllUsers(loginProgram.ConnectToDatabase);
                         break;
                     case "kilepes":
-                        loggedIn = false;
+                        Console.WriteLine("Viszlát!");
+                        Environment.Exit(0);
                         break;
                     default:
                         Console.WriteLine("Érvénytelen parancs.");
                         break;
                 }
             }
-
         }
 
         private static void ListAllUsers(ConnectToDatabase db)
