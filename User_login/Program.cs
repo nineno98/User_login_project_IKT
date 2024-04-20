@@ -11,9 +11,9 @@ namespace User_login
     {
         static void Main(string[] args)
         {
-            ConnectToDatabase connectToDatabase = new ConnectToDatabase();
+            ConnectToDatabase connectToDatabase = new ConnectToDatabase();/*
             bool isUserValid = connectToDatabase.FindUsername("tester");
-            Console.ReadKey();
+            Console.ReadKey();*/
 
             bool loggedIn = false;
             while (!loggedIn)

@@ -10,16 +10,11 @@ namespace User_login
     {
         public LoginProgram()
         {
-            GetUsername();
-            GetPasswd();
+            GetInput();
+       
         }
 
-        private void GetPasswd()
-        {
-            throw new NotImplementedException();
-        }
-
-        private void GetUsername()
+        private void GetInput()
         {
             throw new NotImplementedException();
         }
