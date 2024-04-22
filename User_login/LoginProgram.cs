@@ -9,19 +9,51 @@ namespace User_login
     internal class LoginProgram
     {
         private bool is_authenticated;
-        public ConnectToDatabase ConnectToDatabase { get; private set; }
+        private ConnectToDatabase ConnectToDatabase;
+        private User logged_user;
+
 
         public LoginProgram()
         {
             is_authenticated = false;
             ConnectToDatabase = new ConnectToDatabase();
+            
         }
 
-        public bool Login()
+        public void Login()
         {
             Console.WriteLine("***Sziper-szuper bejelentkező program 4000***");
 
-            Console.Write("Felhasználónév: ");
+            while (true)
+            {
+                Console.Write("Felhasználónév: ");
+                string username = GetInput();
+
+                if (ConnectToDatabase.FindUsername(username))
+                {
+                    Console.Write("Jelszó: ");
+                    string password = GetInput();
+
+                    if (ConnectToDatabase.CheckPasswdForUser(username, password))
+                    {
+                        is_authenticated = true;
+                        logged_user = new User(1, username);
+                        Console.WriteLine("Sikeres bejelentkezés.");
+                        break;
+                    }
+                    else
+                    {
+                        Console.WriteLine("Hibás jelszó.");
+                    }
+                }
+                else
+                {
+                    Console.WriteLine("Hibás felhasználónév.");
+                }
+            }
+
+
+            /*Console.Write("Felhasználónév: ");
             string username = GetInput();
 
             Console.Write("Jelszó: ");
@@ -41,7 +73,7 @@ namespace User_login
 
             is_authenticated = true;
             Console.WriteLine("Sikeres bejelentkezés.");
-            return true;
+            return true;*/
         }
 
         private string GetInput()
