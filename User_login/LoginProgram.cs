@@ -37,7 +37,7 @@ namespace User_login
                     if (ConnectToDatabase.CheckPasswdForUser(username, password))
                     {
                         is_authenticated = true;
-                        logged_user = new User(1, username);
+                        logged_user = ConnectToDatabase.SelectCustomUser(username, password);
                         Console.WriteLine("Sikeres bejelentkezés.");
                         break;
                     }
@@ -85,6 +85,33 @@ namespace User_login
             } while (input == "");
 
             return input;
+        }
+
+        public void Menu()
+        {
+            if (is_authenticated == true)
+            {
+                while (true)
+                {
+                    Console.WriteLine("\nVálassz a menüből: lista | kilepes");
+
+                    string command = Console.ReadLine().ToLower();
+
+                    switch (command)
+                    {
+                        case "lista":
+                            ListAllUsers(loginProgram.ConnectToDatabase);
+                            break;
+                        case "kilepes":
+                            Console.WriteLine("Viszlát!");
+                            Environment.Exit(0);
+                            break;
+                        default:
+                            Console.WriteLine("Érvénytelen parancs.");
+                            break;
+                    }
+                }
+            }
         }
     }
 }

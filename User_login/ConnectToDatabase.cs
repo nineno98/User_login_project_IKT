@@ -173,6 +173,37 @@ namespace User_login
             }
         }
         
+        public User SelectCustomUser(string username, string password)
+        {
+
+            try
+            {
+                User user;
+                sqlStatement = $"SELECT userid, username, email FROM `userdata`" +
+                    $"WHERE username = '{username} and passwd = '{password}';";
+                dbconn.Open();
+                MySqlCommand command = new MySqlCommand();
+                command.Connection = dbconn;
+                command.CommandText = sqlStatement;
+
+                reader = command.ExecuteReader();
+
+
+
+                user = new User(reader.GetInt32(0), reader.GetString(1), reader.GetString(2));
+
+
+
+                dbconn.Close();
+                return user;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("SelectCustomUser: " + e);
+                return null;
+            }
+            
+        }
 
 
     }

@@ -14,11 +14,11 @@ namespace User_login
         private string email_;
         
 
-        public User(int userid_, string unsername_)
+        public User(int userid_, string unsername_, string email_)
         {
             this.userid_ = userid_;
             this.unsername_ = unsername_;
-            
+            this.email_ = email_;
             
         }
 
