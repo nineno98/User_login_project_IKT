@@ -41,6 +41,8 @@ namespace User_login
                         is_authenticated = true;
                         //logged_user = ConnectToDatabase.SelectCustomUser(username, password);
                         users = ConnectToDatabase.SelectUsers();
+                        logged_user = users.Where(x => x.Username_ == username).ToList().First();
+                        Console.WriteLine(logged_user);
 
                         Console.WriteLine("Sikeres bejelentkezés.");
                         break;

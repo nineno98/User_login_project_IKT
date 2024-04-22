@@ -11,6 +11,12 @@ namespace User_login
     {
         static void Main(string[] args)
         {
+
+            LoginProgram loginProgram = new LoginProgram();
+            loginProgram.Login();
+            Console.ReadKey();
+
+            /*
             LoginProgram loginProgram = new LoginProgram();
 
             if (!loginProgram.Login())
@@ -52,7 +58,7 @@ namespace User_login
             foreach (User user in users)
             {
                 Console.WriteLine($"- {user.Unsername_}");
-            }
+            }*/
         }
     }
 }
