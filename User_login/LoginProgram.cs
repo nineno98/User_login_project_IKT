@@ -11,12 +11,14 @@ namespace User_login
         private bool is_authenticated;
         private ConnectToDatabase ConnectToDatabase;
         private User logged_user;
+        private List<User> users;
 
 
         public LoginProgram()
         {
             is_authenticated = false;
             ConnectToDatabase = new ConnectToDatabase();
+            users = new List<User> ();
             
         }
 
@@ -37,7 +39,9 @@ namespace User_login
                     if (ConnectToDatabase.CheckPasswdForUser(username, password))
                     {
                         is_authenticated = true;
-                        logged_user = ConnectToDatabase.SelectCustomUser(username, password);
+                        //logged_user = ConnectToDatabase.SelectCustomUser(username, password);
+                        users = ConnectToDatabase.SelectUsers();
+
                         Console.WriteLine("Sikeres bejelentkezés.");
                         break;
                     }
@@ -100,7 +104,10 @@ namespace User_login
                     switch (command)
                     {
                         case "lista":
-                            ListAllUsers(loginProgram.ConnectToDatabase);
+                            foreach (User item in users)
+                            {
+                                Console.WriteLine(item);
+                            }
                             break;
                         case "kilepes":
                             Console.WriteLine("Viszlát!");
