@@ -38,8 +38,7 @@ namespace User_login
 
                     if (ConnectToDatabase.CheckPasswdForUser(username, password))
                     {
-                        is_authenticated = true;
-                        //logged_user = ConnectToDatabase.SelectCustomUser(username, password);
+                        is_authenticated = true;                    
                         users = ConnectToDatabase.SelectUsers();
                         logged_user = users.Where(x => x.Username_ == username).ToList().First();
                         Console.WriteLine(logged_user);
@@ -56,30 +55,7 @@ namespace User_login
                 {
                     Console.WriteLine("Hibás felhasználónév.");
                 }
-            }
-
-
-            /*Console.Write("Felhasználónév: ");
-            string username = GetInput();
-
-            Console.Write("Jelszó: ");
-            string password = GetInput();
-
-            if (!ConnectToDatabase.FindUsername(username))
-            {
-                Console.WriteLine("Hibás felhasználónév.");
-                return false;
-            }
-
-            if (!ConnectToDatabase.CheckPasswdForUser(username, password))
-            {
-                Console.WriteLine("Hibás jelszó.");
-                return false;
-            }
-
-            is_authenticated = true;
-            Console.WriteLine("Sikeres bejelentkezés.");
-            return true;*/
+            } 
         }
 
         private string GetInput()
