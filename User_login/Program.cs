@@ -13,6 +13,7 @@ namespace User_login
         {
 
             LoginProgram loginProgram = new LoginProgram();
+            //loginProgram.CreateNewUser();
             loginProgram.Login();
             loginProgram.Menu();
             Console.ReadKey();

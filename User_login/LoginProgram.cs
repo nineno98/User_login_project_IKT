@@ -12,12 +12,14 @@ namespace User_login
         private ConnectToDatabase ConnectToDatabase;
         private User logged_user;
         private List<User> users;
+        GenerateHash hashing;
 
 
         public LoginProgram()
         {
             is_authenticated = false;
             ConnectToDatabase = new ConnectToDatabase();
+            hashing = new GenerateHash();
             users = new List<User> ();
             
         }
@@ -35,6 +37,7 @@ namespace User_login
                 {
                     Console.Write("Jelszó: ");
                     string password = GetInput();
+
 
                     if (ConnectToDatabase.CheckPasswdForUser(username, password))
                     {
@@ -97,6 +100,26 @@ namespace User_login
                     }
                 }
             }
+        }
+
+        public void CreateNewUser()
+        {
+            Console.WriteLine("Új felhasználó hozzáadása");
+
+            Console.WriteLine("Add meg a felhasználó nevét:");
+            string username = GetInput();
+            Console.WriteLine("Add meg a felhasználó email címét:");
+            string email = GetInput();
+            Console.WriteLine("Add meg a felhasználó jelszavát");
+            string passwd = GetInput();
+            byte[] salt = hashing.GenerateSaltValue(12);
+            byte[] passwdbyte = Encoding.UTF8.GetBytes(passwd);
+
+            ConnectToDatabase.InsertUser(username, email, Convert.ToBase64String(hashing.GenerateHashValue(passwdbyte, salt)), Convert.ToBase64String(salt));
+            //(string, string) hashed_res = hashing.GenerateHashValue(passwd, salt);
+            //Console.WriteLine(hashed_res.Item1);
+            //ConnectToDatabase.InsertUser(username, email, hashed_res.Item1, hashed_res.Item2);
+
         }
     }
 }

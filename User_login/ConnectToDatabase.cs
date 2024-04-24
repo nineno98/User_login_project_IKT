@@ -28,7 +28,9 @@ namespace User_login
             MySqlConnectionStringBuilder strBuild = new MySqlConnectionStringBuilder();
             strBuild.Server = "localhost";
             strBuild.UserID = "userloginclient";
+            //strBuild.UserID = "root";
             strBuild.Password = "almaeper";
+            //strBuild.Password = "";
             strBuild.Database = "userloginapp";
 
             
@@ -110,8 +112,8 @@ namespace User_login
 
         public bool CheckPasswdForUser(string user, string password)
         {
-            sqlStatement = $"SELECT userid, username, email, passwd FROM `userdata` " +
-                $"WHERE username = '{user}' and passwd = '{password}';";
+            sqlStatement = $"SELECT passwd, salt FROM `userdata` " +
+                $"WHERE username = '{user}';";
             try
             {
                 dbconn.Open();
@@ -119,15 +121,31 @@ namespace User_login
                 command.Connection = dbconn;
                 command.CommandText = sqlStatement;
                 int counter = 0;
+                
+                string salt ="", hashedpass = "";
                 reader = command.ExecuteReader();
                 while (reader.Read())
                 {
                     counter++;
+                    hashedpass = reader.GetString(0);
+                    salt = reader.GetString(1);
                 }
                 dbconn.Close();
                 if (counter == 1)
                 {
-                    return true;
+                    GenerateHash hash = new GenerateHash();
+
+                    if (hash.CompareHashValues(Encoding.UTF8.GetBytes(hashedpass), hash.GenerateHashValue(Encoding.UTF8.GetBytes(password), Encoding.UTF8.GetBytes(salt))))
+                    {
+                        return true;
+                    }
+                    else
+                    {
+                        Console.WriteLine("comapre values failed.");
+                        Console.WriteLine(hashedpass);
+                        Console.WriteLine(Convert.ToBase64String(hash.GenerateHashValue(Encoding.UTF8.GetBytes(password), Encoding.UTF8.GetBytes(salt))));
+                        return false;
+                    }
                 }
                 else
                 {
@@ -203,6 +221,30 @@ namespace User_login
                 return null;
             }
             
+        }
+
+        public void InsertUser(string username, string email, string passwd, string salt)
+        {
+            try
+            {
+                sqlStatement = $"INSERT INTO `userdata`( `username`, `email`, `passwd`, `salt`) "+
+                    $"VALUES ('{username}','{email}','{passwd}','{salt}');";
+                dbconn.Open();
+                MySqlCommand command = new MySqlCommand();
+                command.Connection = dbconn;
+                command.CommandText = sqlStatement;
+
+                command.ExecuteNonQuery();
+                Console.WriteLine("Sikeresen hozzáadva.");
+
+
+                dbconn.Close();
+            }
+            catch (Exception e)
+            {
+
+                Console.WriteLine("InsertUser: " + e);
+            }
         }
 
 

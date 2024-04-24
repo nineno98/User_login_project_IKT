@@ -99,6 +99,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ConnectToDatabase.cs" />
+    <Compile Include="GenerateHash.cs" />
     <Compile Include="LoginProgram.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
