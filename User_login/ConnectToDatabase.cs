@@ -121,29 +121,33 @@ namespace User_login
                 command.Connection = dbconn;
                 command.CommandText = sqlStatement;
                 int counter = 0;
-                
-                string salt ="", hashedpass = "";
+
+                byte[] buffer_pass = new byte[255];
+                byte[] buffer_salt = new byte[255];
                 reader = command.ExecuteReader();
                 while (reader.Read())
                 {
                     counter++;
-                    hashedpass = reader.GetString(0);
-                    salt = reader.GetString(1);
+                    reader.GetBytes(0,0,buffer_pass,0,255);
+                    reader.GetBytes(1, 0, buffer_salt, 0, 255);
+
                 }
                 dbconn.Close();
                 if (counter == 1)
                 {
                     GenerateHash hash = new GenerateHash();
 
-                    if (hash.CompareHashValues(Encoding.UTF8.GetBytes(hashedpass), hash.GenerateHashValue(Encoding.UTF8.GetBytes(password), Encoding.UTF8.GetBytes(salt))))
+                    if (hash.CompareHashValues(buffer_pass, hash.GenerateHashValue(Encoding.ASCII.GetBytes(password), buffer_salt)))
                     {
                         return true;
                     }
+                        
+                    
                     else
                     {
                         Console.WriteLine("comapre values failed.");
-                        Console.WriteLine(hashedpass);
-                        Console.WriteLine(Convert.ToBase64String(hash.GenerateHashValue(Encoding.UTF8.GetBytes(password), Encoding.UTF8.GetBytes(salt))));
+                        //Console.WriteLine(hashedpass);
+                        //Console.WriteLine(Convert.ToBase64String(hash.GenerateHashValue(Encoding.UTF8.GetBytes(password), Encoding.UTF8.GetBytes(salt))));
                         return false;
                     }
                 }
