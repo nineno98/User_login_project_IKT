@@ -146,8 +146,8 @@ namespace User_login
                     else
                     {
                         Console.WriteLine("comapre values failed.");
-                        //Console.WriteLine(hashedpass);
-                        //Console.WriteLine(Convert.ToBase64String(hash.GenerateHashValue(Encoding.UTF8.GetBytes(password), Encoding.UTF8.GetBytes(salt))));
+                        Console.WriteLine(Convert.ToBase64String(buffer_pass));
+                        Console.WriteLine(Convert.ToBase64String(hash.GenerateHashValue(Encoding.ASCII.GetBytes(password), buffer_salt)));
                         return false;
                     }
                 }
@@ -227,7 +227,7 @@ namespace User_login
             
         }
 
-        public void InsertUser(string username, string email, string passwd, string salt)
+        public void InsertUser(string username, string email, byte[] passwd, byte[] salt)
         {
             try
             {

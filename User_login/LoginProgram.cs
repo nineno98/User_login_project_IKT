@@ -113,9 +113,9 @@ namespace User_login
             Console.WriteLine("Add meg a felhasználó jelszavát");
             string passwd = GetInput();
             byte[] salt = hashing.GenerateSaltValue(12);
-            byte[] passwdbyte = Encoding.UTF8.GetBytes(passwd);
+            byte[] passwdbyte = hashing.GenerateHashValue(Encoding.ASCII.GetBytes(passwd), salt);
 
-            ConnectToDatabase.InsertUser(username, email, Convert.ToBase64String(hashing.GenerateHashValue(passwdbyte, salt)), Convert.ToBase64String(salt));
+            ConnectToDatabase.InsertUser(username, email, passwdbyte, salt);
             //(string, string) hashed_res = hashing.GenerateHashValue(passwd, salt);
             //Console.WriteLine(hashed_res.Item1);
             //ConnectToDatabase.InsertUser(username, email, hashed_res.Item1, hashed_res.Item2);
