@@ -18,8 +18,18 @@ namespace User_login_GUI
             Application.SetCompatibleTextRenderingDefault(false);
             //Application.Run(new LoginForm());
 
-            LoginForm form = new LoginForm();
-            form.ShowDialog();
+            LoginForm loginform = new LoginForm();
+            Form1 form1 = new Form1();
+            loginform.ShowDialog();
+            if (loginform.IsAuthenticated)
+            {
+                form1.ShowDialog();
+            }
+            else
+            {
+                System.Environment.Exit(0);
+            }
+            
             
         }
     }

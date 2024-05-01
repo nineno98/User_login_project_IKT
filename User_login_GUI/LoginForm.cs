@@ -27,7 +27,48 @@ namespace User_login_GUI
             connect = new ConnectToDatabase();
             hashing = new GenerateHash();
 
+            
+        }
 
+        private void belepes_gomb_Click(object sender, EventArgs e)
+        {
+            string felhaszn = felhasznev.Text;
+            string passwd = jelszo.Text;
+
+            if (felhaszn != "" && passwd != "")
+            {
+                belepes(felhaszn, passwd);
+            }
+            else
+            {
+                MessageBox.Show("Nem lehet üres mező!");
+            }
+        }
+
+        private void belepes(string felhaszn, string passwd)
+        {
+            if (connect.FindUsername(felhaszn))
+            {
+                if (connect.CheckPasswdForUser(felhaszn, passwd))
+                {
+                    isAuthenticated_ = true;
+                    this.Close();
+                }
+                else
+                {
+                    isAuthenticated_ = false;
+                    MessageBox.Show("Hibás jelszó!");
+                    felhasznev.Text = "";
+                    jelszo.Text = "";
+                }
+            }
+            else
+            {
+                isAuthenticated_ = false;
+                MessageBox.Show("Hibás felhasználónév!");
+                felhasznev.Text = "";
+                jelszo.Text = "";
+            }
         }
     }
 }

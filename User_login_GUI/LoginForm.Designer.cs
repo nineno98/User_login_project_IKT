@@ -75,6 +75,7 @@
             this.belepes_gomb.TabIndex = 4;
             this.belepes_gomb.Text = "Belépés";
             this.belepes_gomb.UseVisualStyleBackColor = true;
+            this.belepes_gomb.Click += new System.EventHandler(this.belepes_gomb_Click);
             // 
             // LoginForm
             // 
