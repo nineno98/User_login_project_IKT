@@ -134,16 +134,15 @@ namespace User_login
                 if (counter == 1)
                 {
                     GenerateHash hash = new GenerateHash();
-
-                    if (hash.CompareHashValues(Encoding.UTF8.GetBytes(hashedpass), hash.GenerateHashValue(Encoding.UTF8.GetBytes(password), Encoding.UTF8.GetBytes(salt))))
+                    byte[] hashed_2 = hash.GenerateHashValue(Encoding.UTF8.GetBytes(password), Convert.FromBase64String(salt));
+                    if(hash.CompareHashValues(hashed_2, Convert.FromBase64String(hashedpass)))
                     {
+                        
                         return true;
                     }
                     else
                     {
-                        Console.WriteLine("comapre values failed.");
-                        Console.WriteLine(hashedpass);
-                        Console.WriteLine(Convert.ToBase64String(hash.GenerateHashValue(Encoding.UTF8.GetBytes(password), Encoding.UTF8.GetBytes(salt))));
+                        Console.WriteLine("Comapre values failed.");
                         return false;
                     }
                 }
@@ -151,12 +150,9 @@ namespace User_login
                 {
                     return false;
                 }
-
-               
             }
             catch (Exception e)
             {
-
                 Console.WriteLine(e);
                 return false;
             }
@@ -180,7 +176,6 @@ namespace User_login
                     user = new User(reader.GetInt32(0), reader.GetString(1), reader.GetString(2));
                     userList.Add(user);
                 }
-
                 dbconn.Close();
                 return userList;
             }
@@ -193,7 +188,6 @@ namespace User_login
         
         public User SelectCustomUser(string username, string password)
         {
-
             try
             {
                 User user;
@@ -203,15 +197,8 @@ namespace User_login
                 MySqlCommand command = new MySqlCommand();
                 command.Connection = dbconn;
                 command.CommandText = sqlStatement;
-
                 reader = command.ExecuteReader();
-
-
-
                 user = new User(reader.GetInt32(0), reader.GetString(1), reader.GetString(2));
-
-
-
                 dbconn.Close();
                 return user;
             }

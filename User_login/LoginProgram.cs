@@ -115,10 +115,7 @@ namespace User_login
             byte[] salt = hashing.GenerateSaltValue(12);
             byte[] passwdbyte = Encoding.UTF8.GetBytes(passwd);
 
-            ConnectToDatabase.InsertUser(username, email, Convert.ToBase64String(hashing.GenerateHashValue(passwdbyte, salt)), Convert.ToBase64String(salt));
-            //(string, string) hashed_res = hashing.GenerateHashValue(passwd, salt);
-            //Console.WriteLine(hashed_res.Item1);
-            //ConnectToDatabase.InsertUser(username, email, hashed_res.Item1, hashed_res.Item2);
+            ConnectToDatabase.InsertUser(username, email, Convert.ToBase64String(hashing.GenerateHashValue(passwdbyte, salt)), Convert.ToBase64String(salt));        
 
         }
     }

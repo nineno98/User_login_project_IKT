@@ -15,23 +15,14 @@ namespace User_login
         }
 
         public byte[] GenerateHashValue(byte[] passwdByte,  byte[] saltByte)
-        {
-            //byte[] passwdByte = Encoding.UTF8.GetBytes(passwd);
-            //byte[] saltByte = Encoding.UTF8.GetBytes(salt);
-            
-
-            HashAlgorithm hashAlgorithm = new SHA256Managed();
-            byte[] result = new byte[passwdByte.Length + saltByte.Length];
-            for (int i = 0; i < passwdByte.Length; i++)
+        {      
+            byte[] res;
+            using (HMACSHA256 hamacs = new HMACSHA256())
             {
-                result[i] = passwdByte[i];
-            }
-            for (int i = 0; i < saltByte.Length; i++)
-            {
-                result[passwdByte.Length + i] = saltByte[i];
-            }
-            //return (Convert.ToBase64String(hashAlgorithm.ComputeHash(result)), Convert.ToBase64String(saltByte));
-            return hashAlgorithm.ComputeHash(result);
+                hamacs.Key = saltByte;
+                res = hamacs.ComputeHash(passwdByte);
+            }       
+            return res;
         }
 
         public byte[] GenerateSaltValue(int size)
