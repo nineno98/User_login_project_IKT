@@ -210,7 +210,7 @@ namespace User_login
             
         }
 
-        public void InsertUser(string username, string email, byte[] passwd, byte[] salt)
+        public void InsertUser(string username, string email, string passwd, string salt)
         {
             try
             {
